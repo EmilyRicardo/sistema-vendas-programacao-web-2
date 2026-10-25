@@ -1,0 +1,1 @@
+Adicione aqui capturas de tela REAIS após executar o aplicativo Java. Consulte o README.md. Não use imagens da prévia HTML como se fossem capturas da aplicação Java em execução.
