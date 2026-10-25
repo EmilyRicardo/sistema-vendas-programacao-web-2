@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html" xmlns:p="primefaces" xmlns:ui="jakarta.faces.facelets" xmlns:f="jakarta.faces.core">
+<h:head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><ui:insert name="titulo">Vértice | Sistema de Vendas</ui:insert></title>
+    <h:outputStylesheet library="sistema" name="css/admin.css" />
+</h:head>
+<h:body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <a class="brand" href="#{request.contextPath}/index.xhtml"><span class="brand-mark">V</span><span><strong>Vértice</strong><small>Sistema de Vendas</small></span></a>
+            <div class="nav-caption">MENU PRINCIPAL</div>
+            <h:form id="menuForm">
+                <p:menu styleClass="side-menu">
+                    <p:menuitem value="Visão geral" icon="pi pi-home" url="index.xhtml" />
+                    <p:submenu label="Cadastros" icon="pi pi-folder">
+                        <p:menuitem value="Marcas" icon="pi pi-tag" url="marcas.xhtml" />
+                        <p:menuitem value="Categorias" icon="pi pi-sitemap" url="categorias.xhtml" />
+                        <p:menuitem value="Produtos" icon="pi pi-box" url="produtos.xhtml" />
+                    </p:submenu>
+                </p:menu>
+            </h:form>
+            <div class="sidebar-foot"><span class="status-dot"></span> Módulo base de catálogo</div>
+        </aside>
+        <main class="main-area">
+            <header class="topbar"><div><span class="eyebrow">GESTÃO COMERCIAL</span><h1><ui:insert name="cabecalho">Visão geral</ui:insert></h1></div><div class="topbar-right"><span class="avatar">SV</span><span><strong>Administrador</strong><small>Catálogo de vendas</small></span></div></header>
+            <section class="page-content">
+                <p:growl id="growl" showDetail="true" life="5000" escape="true"><p:autoUpdate /></p:growl>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="360">
+                    <p:commandButton value="Cancelar" type="button" styleClass="secondary-button ui-confirmdialog-no" icon="pi pi-times" />
+                    <p:commandButton value="Sim, continuar" type="button" styleClass="primary-button ui-confirmdialog-yes" icon="pi pi-check" />
+                </p:confirmDialog>
+                <ui:insert name="conteudo" />
+            </section>
+            <footer class="footer">Sistema de Vendas · Atividade prática de Programação Web 2</footer>
+        </main>
+    </div>
+</h:body>
+</html>

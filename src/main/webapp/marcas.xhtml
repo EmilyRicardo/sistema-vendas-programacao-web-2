@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html" xmlns:ui="jakarta.faces.facelets" xmlns:p="primefaces" xmlns:f="jakarta.faces.core" template="/template.xhtml">
+    <ui:define name="titulo">Marcas | Vértice</ui:define><ui:define name="cabecalho">Marcas</ui:define>
+    <ui:define name="conteudo">
+        <div class="page-intro"><div><h2>Cadastro de marcas</h2><p>Gerencie os nomes dos fabricantes vinculados ao catálogo.</p></div><h:form id="marcaToolbarForm"><p:commandButton value="Nova marca" icon="pi pi-plus" styleClass="primary-button" actionListener="#{marcaController.novo}" update=":marcaForm" oncomplete="PF('marcaDialog').show()" /></h:form></div>
+        <h:form id="marcaTableForm">
+            <p:dataTable id="tabelaMarcas" value="#{marcaController.marcas}" var="m" paginator="true" rows="10" rowsPerPageTemplate="5,10,20,50" paginatorPosition="bottom" sortMode="multiple" emptyMessage="Nenhuma marca cadastrada." styleClass="data-table" reflow="true">
+                <p:column headerText="Marca" sortBy="#{m.nome}" filterBy="#{m.nome}" filterMatchMode="contains"><h:outputText value="#{m.nome}" styleClass="cell-strong" /></p:column>
+                <p:column headerText="Descrição" sortBy="#{m.descricao}" filterBy="#{m.descricao}" filterMatchMode="contains"><h:outputText value="#{empty m.descricao ? '—' : m.descricao}" /></p:column>
+                <p:column headerText="Status" sortBy="#{m.ativo}" styleClass="status-column"><h:outputText value="#{m.ativo ? 'Ativa' : 'Inativa'}" styleClass="#{m.ativo ? 'status-pill active' : 'status-pill inactive'}" /></p:column>
+                <p:column headerText="Ações" styleClass="actions-column" exportable="false">
+                    <p:commandButton icon="pi pi-pencil" title="Editar" styleClass="ui-button-text-only action-button" actionListener="#{marcaController.editar(m)}" update=":marcaForm" oncomplete="PF('marcaDialog').show()" />
+                    <p:commandButton icon="pi pi-power-off" title="Ativar ou inativar" styleClass="ui-button-text-only action-button" actionListener="#{marcaController.alternarAtivo(m)}" update=":marcaTableForm:tabelaMarcas" />
+                    <p:commandButton icon="pi pi-trash" title="Excluir definitivamente (somente sem produtos)" styleClass="ui-button-text-only action-button danger-action" actionListener="#{marcaController.excluirFisicamente(m)}" update=":growl :marcaTableForm:tabelaMarcas"><p:confirm header="Excluir marca definitivamente" message="Deseja excluir esta marca? Se houver produtos vinculados, a exclusão será bloqueada. Para manter o histórico, prefira inativar." icon="pi pi-exclamation-triangle" /></p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <p:dialog id="marcaDialog" widgetVar="marcaDialog" header="Dados da marca" modal="true" responsive="true" width="520" closeOnEscape="true" resizable="false">
+            <h:form id="marcaForm">
+                <div class="form-grid"><div class="field full"><p:outputLabel for="nome" value="Nome *"/><p:inputText id="nome" value="#{marcaController.marca.nome}" required="true" requiredMessage="Informe o nome da marca." maxlength="120" placeholder="Ex.: Acme" styleClass="w-full"/><p:message for="nome" /></div>
+                <div class="field full"><p:outputLabel for="descricao" value="Descrição"/><p:inputTextarea id="descricao" value="#{marcaController.marca.descricao}" rows="3" maxlength="500" autoResize="false" placeholder="Informações opcionais sobre a marca" styleClass="w-full"/></div>
+                <div class="field full"><p:selectBooleanCheckbox id="ativo" value="#{marcaController.marca.ativo}" itemLabel="Marca ativa" /></div></div>
+                <div class="dialog-actions"><p:commandButton value="Cancelar" type="button" styleClass="secondary-button" onclick="PF('marcaDialog').hide()"/><p:commandButton value="Salvar marca" icon="pi pi-check" action="#{marcaController.salvar}" update=":growl :marcaTableForm:tabelaMarcas marcaForm" oncomplete="if (!args.validationFailed) PF('marcaDialog').hide()" styleClass="primary-button" /></div>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+</ui:composition>

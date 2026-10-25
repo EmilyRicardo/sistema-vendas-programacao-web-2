@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html" xmlns:ui="jakarta.faces.facelets" xmlns:p="primefaces" xmlns:f="jakarta.faces.core" template="/template.xhtml">
+    <ui:define name="titulo">Visão geral | Vértice</ui:define><ui:define name="cabecalho">Visão geral</ui:define>
+    <ui:define name="conteudo">
+        <div class="welcome"><div><span class="eyebrow light">BEM-VINDA(O) AO CATÁLOGO</span><h2>Organize seu catálogo em um só lugar.</h2><p>Cadastre marcas, construa uma hierarquia de categorias e mantenha seus produtos e imagens atualizados.</p></div><div class="welcome-icon"><i class="pi pi-chart-bar"></i></div></div>
+        <div class="stats-grid">
+            <div class="stat-card"><span class="stat-icon purple"><i class="pi pi-tag"></i></span><div><span>Marcas</span><strong>Cadastro e ativação</strong><small>Nomes únicos e status ativo/inativo</small></div></div>
+            <div class="stat-card"><span class="stat-icon blue"><i class="pi pi-sitemap"></i></span><div><span>Categorias</span><strong>Hierarquia recursiva</strong><small>Categorias e subcategorias em níveis</small></div></div>
+            <div class="stat-card"><span class="stat-icon orange"><i class="pi pi-box"></i></span><div><span>Produtos</span><strong>Estoque e imagens</strong><small>Preço, marca, categoria e miniatura</small></div></div>
+        </div>
+        <div class="section-heading"><div><h2>Comece por aqui</h2><p>Cadastre os dados seguindo esta ordem recomendada.</p></div></div>
+        <div class="quick-grid">
+            <a href="marcas.xhtml" class="quick-card"><span class="quick-icon"><i class="pi pi-tag"></i></span><div><h3>1. Cadastrar marcas</h3><p>Registre os fabricantes e fornecedores que serão associados aos produtos.</p><span class="quick-link">Abrir marcas <i class="pi pi-arrow-right"></i></span></div></a>
+            <a href="categorias.xhtml" class="quick-card"><span class="quick-icon"><i class="pi pi-sitemap"></i></span><div><h3>2. Criar categorias</h3><p>Monte categorias principais e subcategorias sem criar ciclos.</p><span class="quick-link">Abrir categorias <i class="pi pi-arrow-right"></i></span></div></a>
+            <a href="produtos.xhtml" class="quick-card"><span class="quick-icon"><i class="pi pi-box"></i></span><div><h3>3. Cadastrar produtos</h3><p>Associe marca e categoria, informe preço e estoque e envie uma imagem.</p><span class="quick-link">Abrir produtos <i class="pi pi-arrow-right"></i></span></div></a>
+        </div>
+        <div class="notice"><i class="pi pi-info-circle"></i><div><strong>Primeiro acesso</strong><p>Crie o banco <code>vendas_db</code>, execute os scripts da pasta <code>sql</code> e configure o usuário e senha em <code>persistence.xml</code>.</p></div></div>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html" xmlns:ui="jakarta.faces.facelets" xmlns:p="primefaces" xmlns:f="jakarta.faces.core" template="/template.xhtml">
+    <ui:define name="titulo">Categorias | Vértice</ui:define><ui:define name="cabecalho">Categorias</ui:define>
+    <ui:define name="conteudo">
+        <div class="page-intro"><div><h2>Árvore de categorias</h2><p>Crie categorias principais e subcategorias em múltiplos níveis.</p></div><h:form id="categoriaToolbarForm"><p:commandButton value="Nova categoria" icon="pi pi-plus" styleClass="primary-button" actionListener="#{categoriaController.novo}" update=":categoriaForm" oncomplete="PF('categoriaDialog').show()" /></h:form></div>
+        <div class="notice"><i class="pi pi-sitemap"></i><div><strong>Hierarquia segura</strong><p>Escolha uma categoria pai para criar subcategorias. O sistema impede que uma categoria se torne descendente dela mesma e não permite excluir categorias que ainda tenham filhos ou produtos.</p></div></div>
+        <h:form id="categoriaTableForm">
+            <p:dataTable id="tabelaCategorias" value="#{categoriaController.categorias}" var="c" paginator="true" rows="10" rowsPerPageTemplate="5,10,20,50" paginatorPosition="bottom" sortMode="multiple" emptyMessage="Nenhuma categoria cadastrada." styleClass="data-table" reflow="true">
+                <p:column headerText="Caminho hierárquico" sortBy="#{c.nome}" filterBy="#{c.caminhoHierarquico}" filterMatchMode="contains"><span class="tree-marker"><i class="pi pi-sitemap"></i></span><h:outputText value="#{c.caminhoHierarquico}" styleClass="cell-strong" /></p:column>
+                <p:column headerText="Categoria pai" sortBy="#{c.categoriaPai.nome}" filterBy="#{c.categoriaPai.nome}" filterMatchMode="contains"><h:outputText value="#{c.categoriaPai == null ? '— Categoria raiz —' : c.categoriaPai.caminhoHierarquico}" /></p:column>
+                <p:column headerText="Ações" styleClass="actions-column" exportable="false"><p:commandButton icon="pi pi-pencil" title="Editar" styleClass="ui-button-text-only action-button" actionListener="#{categoriaController.editar(c)}" update=":categoriaForm" oncomplete="PF('categoriaDialog').show()"/><p:commandButton icon="pi pi-trash" title="Excluir" styleClass="ui-button-text-only action-button danger-action" actionListener="#{categoriaController.excluir(c)}" update=":growl :categoriaTableForm:tabelaCategorias"><p:confirm header="Confirmar exclusão" message="Deseja excluir esta categoria? Se houver subcategorias ou produtos vinculados, a operação será bloqueada." icon="pi pi-exclamation-triangle" /></p:commandButton></p:column>
+            </p:dataTable>
+        </h:form>
+        <p:dialog id="categoriaDialog" widgetVar="categoriaDialog" header="Dados da categoria" modal="true" responsive="true" width="540" closeOnEscape="true" resizable="false">
+            <h:form id="categoriaForm">
+                <div class="form-grid"><div class="field full"><p:outputLabel for="nome" value="Nome da categoria *"/><p:inputText id="nome" value="#{categoriaController.categoria.nome}" required="true" requiredMessage="Informe o nome da categoria." maxlength="120" placeholder="Ex.: Eletrônicos" styleClass="w-full"/><p:message for="nome" /></div>
+                <div class="field full"><p:outputLabel for="pai" value="Categoria pai"/><p:selectOneMenu id="pai" value="#{categoriaController.categoria.categoriaPai}" converter="categoriaConverter" styleClass="w-full"><f:selectItems value="#{categoriaController.opcoesPai}"/><p:ajax process="@this"/></p:selectOneMenu><small>Selecione “Categoria raiz” para não ter uma categoria pai.</small></div></div>
+                <div class="dialog-actions"><p:commandButton value="Cancelar" type="button" styleClass="secondary-button" onclick="PF('categoriaDialog').hide()"/><p:commandButton value="Salvar categoria" icon="pi pi-check" action="#{categoriaController.salvar}" update=":growl :categoriaTableForm:tabelaCategorias categoriaForm" oncomplete="if (!args.validationFailed) PF('categoriaDialog').hide()" styleClass="primary-button" /></div>
+            </h:form>
+        </p:dialog>
+    </ui:define>
+</ui:composition>
