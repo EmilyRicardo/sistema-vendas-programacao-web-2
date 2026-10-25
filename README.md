@@ -1,80 +1,114 @@
 # Sistema de Vendas — CRUD de Marcas, Categorias e Produtos
 
-Projeto acadêmico para Programação Web 2, organizado conforme o enunciado da atividade. Tecnologias: Java, Maven, Jakarta Faces (JSF), PrimeFaces, Hibernate/JPA e PostgreSQL.
+Projeto acadêmico da disciplina Programação Web 2, com o objetivo de desenvolver o módulo base de um Sistema de Vendas utilizando Java, Maven, Jakarta Faces (JSF), PrimeFaces, Hibernate/JPA e PostgreSQL.
 
-## Funcionalidades no código-fonte
+## 1. Funcionalidades
 
-- **Marca:** listagem, cadastro, edição, validação de nome único, ativação/inativação e bloqueio de exclusão física quando existem produtos vinculados.
-- **Categoria:** cadastro, edição e exclusão com categoria pai recursiva, caminho hierárquico, prevenção de ciclos e proteção contra exclusão quando há dependências.
-- **Produto:** cadastro, edição, exclusão, preço maior que zero, estoque não negativo e associação obrigatória a marca/categoria.
-- **Imagem:** componente PrimeFaces de upload para JPG/JPEG, PNG e WEBP, com limite de 5 MB e exibição da miniatura.
-- **Interface:** tabelas PrimeFaces com paginação, ordenação e filtros, mensagens de sucesso/erro e diálogos de confirmação.
-- **Arquitetura:** entidades em `model`, acesso a dados em `dao`, regras em `service`, beans CDI em `controller` e conversores Faces em `converter`.
-- **Banco de dados:** scripts PostgreSQL DDL e DML na pasta `sql`.
+- **Marca:** listagem, cadastro, edição, validação de nome único e ativação/inativação.
+- **Categoria:** cadastro, edição, hierarquia com categoria pai, caminho hierárquico e validação de dependências.
+- **Produto:** cadastro, edição, exclusão e associação obrigatória a marca e categoria, com validação de preço e estoque.
+- **Imagens:** suporte previsto para upload de imagens JPG/JPEG, PNG e WEBP, com limite de 5 MB e exibição de miniaturas.
+- **Interface:** páginas JSF com componentes PrimeFaces, tabelas, filtros, paginação, mensagens e confirmações.
+- **Arquitetura:** separação em entidades, DAOs, serviços, controllers CDI e conversores Faces.
+- **Banco de dados:** scripts SQL para criação das tabelas e inserção de dados de teste.
 
-> **Importante:** o código e os arquivos de configuração foram preparados, mas não foi possível executar o build e testar o deploy de ponta a ponta neste ambiente. Portanto, não considere a aplicação validada até realizar as etapas de execução abaixo. A prévia visual HTML fornecida separadamente é apenas uma demonstração e não substitui esta aplicação Java.
+## 2. Tecnologias utilizadas
 
-## Estrutura
+- Java
+- Apache Maven
+- Jakarta Faces (JSF)
+- PrimeFaces
+- Hibernate/JPA
+- PostgreSQL
+- Git e GitHub
+
+## 3. Estrutura do projeto
 
 ```text
 pom.xml
-mvnw / mvnw.cmd
-src/main/java/br/edu/vendas/
-  model/       Entidades JPA e validações
-  dao/         Acesso a dados com EntityManager
-  service/     Regras de negócio e validações
-  controller/  Managed Beans CDI usados pelas telas
-  converter/   Conversores Faces para Marca e Categoria
-  util/        Gerenciamento do EntityManager
-  web/         Servlet para exibir imagens
-src/main/resources/META-INF/persistence.xml
-src/main/webapp/              Páginas JSF/PrimeFaces e CSS
-sql/01-criacao-tabelas.sql    DDL do PostgreSQL
-sql/02-dados-teste.sql        Dados iniciais opcionais
+mvnw
+mvnw.cmd
+src/
+  main/
+    java/br/edu/vendas/
+      model/
+      dao/
+      service/
+      controller/
+      converter/
+      util/
+      web/
+    resources/META-INF/
+      persistence.xml
+    webapp/
+sql/
+  01-criacao-tabelas.sql
+  02-dados-teste.sql
+docs/
+  screenshots/
+README.md
+.gitignore
 ```
 
-## Como configurar e executar (Windows)
+## 4. Configuração e execução
 
-**Requisitos:** JDK 17 ou superior, PostgreSQL e um servidor compatível com Jakarta Faces/Servlet 6.1 e as dependências da aplicação. O primeiro build precisa de acesso à internet para baixar Maven e bibliotecas.
+Para executar a aplicação, são necessários Java JDK 17 ou superior, PostgreSQL e um servidor de aplicação compatível com as dependências do projeto.
 
-1. Instale o JDK 17 ou superior e o PostgreSQL.
-2. No PostgreSQL, crie um banco chamado `vendas_db`.
-3. Abra o banco no pgAdmin e execute `sql/01-criacao-tabelas.sql`.
-4. Opcionalmente, execute `sql/02-dados-teste.sql` para inserir dados de exemplo.
-5. Edite `src/main/resources/META-INF/persistence.xml` e ajuste URL, usuário e senha para o seu PostgreSQL. O valor de senha presente no arquivo é só exemplo; altere antes de usar.
-6. Abra esta pasta no VS Code e abra `Terminal > New Terminal`.
-7. Execute:
+1. Instalar e configurar o Java, o PostgreSQL e um servidor de aplicação compatível.
+2. Criar um banco de dados chamado `vendas_db` no PostgreSQL.
+3. Executar o script `sql/01-criacao-tabelas.sql` no banco criado.
+4. Opcionalmente, executar `sql/02-dados-teste.sql` para inserir registros de exemplo.
+5. Configurar a URL, o usuário e a senha do banco no arquivo `src/main/resources/META-INF/persistence.xml`. A senha de exemplo deve ser substituída pela senha configurada localmente.
+6. Abrir a pasta do projeto no VS Code e acessar **Terminal > New Terminal**.
+7. Executar o comando abaixo no terminal do Windows:
 
-   ```powershell
-   .\mvnw.cmd clean package
-   ```
+```powershell
+.\mvnw.cmd clean package
+```
 
-8. Se o build terminar com `BUILD SUCCESS`, o WAR será criado em `target/sistema-vendas.war`.
-9. Faça o deploy do WAR em um servidor compatível, configure o acesso ao banco e teste todos os CRUDs e o upload antes de considerar a aplicação pronta.
+8. Se a compilação terminar com `BUILD SUCCESS`, localizar o arquivo WAR gerado na pasta `target`.
+9. Configurar o servidor de aplicação, realizar o deploy e testar os cadastros, as validações, a hierarquia de categorias e o upload de imagens.
 
-O Maven Wrapper automatiza o download do Maven, mas **não instala o Java, PostgreSQL ou servidor web**. Se ocorrer `BUILD FAILURE`, leia a mensagem `[ERROR]` no terminal e corrija antes do deploy.
+O Maven Wrapper auxilia no download do Maven, mas não instala o Java, o PostgreSQL nem o servidor de aplicação.
 
-## Checklist obrigatório para a entrega
+**Estado da validação:** a execução integrada e o deploy ainda precisam ser realizados e testados no ambiente de execução antes de considerar a aplicação validada.
 
-- [ ] Preencher os nomes reais dos integrantes abaixo.
-- [ ] Executar a aplicação e verificar os três CRUDs, hierarquia, validações e upload.
-- [ ] Salvar capturas de tela reais do sistema funcionando em `docs/screenshots/` e inseri-las nesta documentação.
-- [ ] Confirmar que os dois scripts SQL estão no repositório.
-- [ ] Publicar o projeto no GitHub e conferir que `README.md`, `pom.xml`, `src`, `sql` e `.gitignore` aparecem no repositório.
-- [ ] Criar commits progressivos e descritivos durante a organização/validação; não inventar histórico de commits.
-- [ ] Enviar o link do repositório do GitHub no AVA, conforme a orientação do professor.
+## 5. Banco de dados
 
-### Capturas de tela a adicionar
+A pasta `sql` contém:
 
-1. Listagem/cadastro de marcas.
-2. Árvore de categorias mostrando pelo menos uma subcategoria.
-3. Formulário de cadastro de produto com marca e categoria.
-4. Listagem de produtos mostrando as miniaturas das imagens.
+- `01-criacao-tabelas.sql`: criação das tabelas e restrições do banco.
+- `02-dados-teste.sql`: inserção de registros iniciais para testes.
 
-Não use a prévia HTML independente como evidência de que o backend Java foi executado.
+## 6. Checklist de entrega
 
-## Integrantes
+- [ ] Conferir a identificação dos integrantes.
+- [ ] Verificar se os arquivos Java e as páginas JSF estão no repositório.
+- [ ] Executar e testar os CRUDs de Marca, Categoria e Produto.
+- [ ] Verificar as validações, a hierarquia de categorias e o upload de imagens.
+- [ ] Confirmar a presença dos dois scripts SQL.
+- [ ] Adicionar capturas de tela reais da aplicação funcionando em `docs/screenshots/`.
+- [ ] Conferir o README e o arquivo `.gitignore`.
+- [ ] Manter commits progressivos e descritivos no GitHub.
+- [ ] Enviar o link do repositório no AVA, conforme as orientações do professor.
 
-- Integrante 1: ÉMILY RICARDO DE LIMA
-- Disciplina: Programação Web 2
-- Professor: Danilo Souza Almeida
+## 7. Capturas de tela
+
+Após executar e testar a aplicação, adicionar capturas reais das seguintes funcionalidades:
+
+1. Listagem e cadastro de marcas.
+2. Categorias com uma subcategoria.
+3. Cadastro de produto com marca e categoria selecionadas.
+4. Listagem de produtos com miniaturas das imagens.
+
+As capturas devem demonstrar a aplicação Java em funcionamento. Uma prévia HTML independente não comprova a execução do backend.
+
+## 8. Integrantes
+
+- **Integrante 1:** Émily Ricardo de Lima
+- **Disciplina:** Programação Web 2
+- **Professor:** Danilo Souza Almeida
+
+## 9. Repositório
+
+Repositório do projeto: https://github.com/EmilyRicardo/sistema-vendas-programacao-web-2
