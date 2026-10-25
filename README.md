@@ -75,7 +75,6 @@ Não use a prévia HTML independente como evidência de que o backend Java foi e
 
 ## Integrantes
 
-- Integrante 1: **PREENCHER NOME COMPLETO**
-- Integrante 2 (se houver): **PREENCHER NOME COMPLETO**
+- Integrante 1: ÉMILY RICARDO DE LIMA
 - Disciplina: Programação Web 2
 - Professor: Danilo Souza Almeida
