@@ -1,0 +1,25 @@
+# Maven
+**/target/
+**/build/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+.nb-gradle/
+nbproject/private/
+.settings/
+.classpath
+.project
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env / credentials
+.env
+*.local.properties
+
+# Uploaded files and logs
+uploads/
+*.log
